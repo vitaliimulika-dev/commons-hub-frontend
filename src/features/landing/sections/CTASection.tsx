@@ -1,6 +1,13 @@
+import { useNavigate } from 'react-router-dom'
 import { Button } from '@/shared/ui'
 
 export function CTASection(): React.JSX.Element {
+  const navigate = useNavigate()
+
+  const handleStartCommunity = (): void => {
+    void navigate('/setup/plan')
+  }
+
   return (
     <>
       {/* Promise */}
@@ -13,7 +20,10 @@ export function CTASection(): React.JSX.Element {
         className="flex animate-riseFade justify-center opacity-0"
         style={{ animationDelay: '320ms' }}
       >
-        <Button className="h-auto animate-ctaBreathe rounded-[16px] bg-[#1f6f4a] px-[22px] py-3.5 font-black hover:-translate-y-px hover:bg-[#1f6f4a] text-base">
+        <Button
+          onClick={handleStartCommunity}
+          className="h-auto animate-ctaBreathe rounded-[16px] bg-[#1f6f4a] px-[22px] py-3.5 font-black hover:-translate-y-px hover:bg-[#1f6f4a] text-base"
+        >
           Start Your Community
         </Button>
       </div>
