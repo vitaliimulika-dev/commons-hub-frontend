@@ -4,30 +4,148 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Surfaces */
+    --background: 140 20% 96%;
+    --foreground: 150 26% 9%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
+    --card-foreground: 150 26% 9%;
+    --card-secondary: 120 14% 98%;
+
+    /* Primary (brand green) */
+    --primary: 150 48% 25%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary (light pills) */
+    --secondary: 140 25% 94%;
+    --secondary-foreground: 150 26% 9%;
+
+    /* Muted */
+    --muted: 140 25% 94%;
+    --muted-foreground: 150 14% 36%;
+
+    /* Accent (same as primary for brand consistency) */
+    --accent: 150 48% 25%;
+    --accent-foreground: 0 0% 100%;
+    --accent-dark: 150 68% 19%;
+
+    /* Borders */
+    --border: 140 18% 87%;
+    --input: 140 18% 87%;
+
+    /* Ring (focus states) */
+    --ring: 150 48% 25%;
+
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Popover */
+    --popover: 0 0% 100%;
+    --popover-foreground: 150 26% 9%;
+
+    /* Border Radius */
+    --radius: 1.125rem;
+    --radius-md: 0.875rem;
+    --radius-sm: 0.75rem;
   }
+
 }
 
 @layer base {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
+    font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+      Helvetica, Arial, sans-serif;
+    line-height: 1.35;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Default background with subtle gradients */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: -1;
+    background: radial-gradient(
+        1000px 520px at 20% 0%,
+        hsl(150 48% 25% / 0.14) 0%,
+        transparent 62%
+      ),
+      radial-gradient(
+        900px 520px at 80% 10%,
+        hsl(150 68% 19% / 0.1) 0%,
+        transparent 62%
+      );
+  }
+
+}
+
+@layer components {
+  /* Custom shadow utilities */
+  .shadow-brand {
+    box-shadow: 0 18px 50px hsl(150 26% 9% / 0.12);
+  }
+
+  .shadow-brand-sm {
+    box-shadow: 0 6px 18px hsl(150 48% 25% / 0.35);
+  }
+
+  /* Card with backdrop blur */
+  .card-blur {
+    @apply bg-card/70 backdrop-blur-[10px];
+  }
+
+  /* Flow mode styles (for setup/funding pages) */
+  .flow-root {
+    min-height: 100vh;
+    padding: 1.375rem 0;
+    background: radial-gradient(
+        1200px 700px at 20% 0%,
+        hsl(150 48% 25% / 0.1),
+        transparent 60%
+      ),
+      radial-gradient(
+        900px 600px at 85% 15%,
+        hsl(150 48% 25% / 0.07),
+        transparent 55%
+      ),
+      linear-gradient(
+        to bottom,
+        hsl(150 48% 25% / 0.05) 0%,
+        hsl(140 20% 96%) 70%
+      );
+  }
+
+  /* Animated progress bars */
+  @keyframes flowPulse {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .progress-animated {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--primary)),
+      hsl(var(--primary) / 0.65),
+      hsl(var(--primary))
+    );
+    background-size: 200% 100%;
+    animation: flowPulse 3s ease-in-out infinite;
   }
 }
