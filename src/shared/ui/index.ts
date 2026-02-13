@@ -9,4 +9,4 @@ export { Textarea } from './textarea'
 
 // Custom components
 export { LogoMark } from './logo-mark'
-export { Chip } from './chip'
+export { FeatureItem } from './future-Item'

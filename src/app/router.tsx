@@ -1,81 +1,152 @@
 import { createBrowserRouter } from 'react-router-dom'
 import LandingPage from '@/features/landing/LandingPage'
-import StepPlan from '@/features/onboarding/steps/StepPlan'
-import StepBasics from '@/features/onboarding/steps/StepBasics'
-import StepReview from '@/features/onboarding/steps/StepReview'
-import { Dashboard } from '@/features/dashboard/Dashboard'
+import { StepPlan, StepBasics, StepReview } from '@/features/onboarding/pages'
+import { DashboardPage } from '@/features/dashboard/DashboardPage'
 import { SetupBranding, SetupPurpose, SetupWelcome } from '@/features/setup-wizard'
-import FundingPage from '@/features/funding/FundingPage'
-import FundingStripePage from '@/features/funding/FundingStripePage'
-import FundingOptionsPage from '@/features/funding/FundingOptionsPage'
-import FundingPostPage from '@/features/funding/FundingPostPage'
+import {
+  FundingIntroPage,
+  FundingPayoutConnectPage,
+  FundingOptionsPage,
+  FundingPostPage,
+} from '@/features/funding/pages'
 import CommunityPage from '@/features/community/CommunityPage'
 import InvitePage from '@/features/community/InvitePage'
 import CommunityFundingPage from '@/features/community/CommunityFundingPage'
+import { AccessGuard, AccessLevel } from '@/shared/guards'
 
 export const router = createBrowserRouter([
-  // Public
+  // ==================== Public Routes ====================
+  // Available to everyone, no requirements
   {
     path: '/',
-    element: <LandingPage />,
+    element: (
+      <AccessGuard level={AccessLevel.Public}>
+        <LandingPage />
+      </AccessGuard>
+    ),
   },
   {
     path: '/invite',
-    element: <InvitePage />,
+    element: (
+      <AccessGuard level={AccessLevel.Public}>
+        <InvitePage />
+      </AccessGuard>
+    ),
   },
-  // Setup
+
+  // ==================== Onboarding Routes ====================
+  // Initial setup flow - available before onboarding completion
   {
     path: '/setup/plan',
-    element: <StepPlan />,
+    element: (
+      <AccessGuard level={AccessLevel.Public}>
+        <StepPlan />
+      </AccessGuard>
+    ),
   },
   {
     path: '/setup/basics',
-    element: <StepBasics />,
+    element: (
+      <AccessGuard level={AccessLevel.Public}>
+        <StepBasics />
+      </AccessGuard>
+    ),
   },
   {
     path: '/setup/review',
-    element: <StepReview />,
+    element: (
+      <AccessGuard level={AccessLevel.Public}>
+        <StepReview />
+      </AccessGuard>
+    ),
   },
-  // Dashboard
+
+  // ==================== Dashboard Routes ====================
+  // Requires: OnboardingCompleted
   {
     path: '/dashboard',
-    element: <Dashboard />,
-  },
-  // Setup Wizard
-  {
-    path: '/setup-wizard/branding',
-    element: <SetupBranding />,
-  },
-  {
-    path: '/setup-wizard/purpose',
-    element: <SetupPurpose />,
-  },
-  {
-    path: '/setup-wizard/welcome',
-    element: <SetupWelcome />,
-  },
-  {
-    path: '/dashboard/funding',
-    element: <FundingPage />,
-  },
-  {
-    path: '/dashboard/funding/stripe',
-    element: <FundingStripePage />,
-  },
-  {
-    path: '/dashboard/funding/options',
-    element: <FundingOptionsPage />,
-  },
-  {
-    path: '/dashboard/funding/post',
-    element: <FundingPostPage />,
+    element: (
+      <AccessGuard level={AccessLevel.OnboardingCompleted}>
+        <DashboardPage />
+      </AccessGuard>
+    ),
   },
   {
     path: '/dashboard/community',
-    element: <CommunityPage />,
+    element: (
+      <AccessGuard level={AccessLevel.OnboardingCompleted}>
+        <CommunityPage />
+      </AccessGuard>
+    ),
   },
   {
     path: '/dashboard/community/funding',
-    element: <CommunityFundingPage />,
+    element: (
+      <AccessGuard level={AccessLevel.OnboardingCompleted}>
+        <CommunityFundingPage />
+      </AccessGuard>
+    ),
+  },
+
+  // ==================== Setup Wizard Routes ====================
+  // Requires: OnboardingCompleted
+  {
+    path: '/setup-wizard/branding',
+    element: (
+      <AccessGuard level={AccessLevel.OnboardingCompleted}>
+        <SetupBranding />
+      </AccessGuard>
+    ),
+  },
+  {
+    path: '/setup-wizard/purpose',
+    element: (
+      <AccessGuard level={AccessLevel.OnboardingCompleted}>
+        <SetupPurpose />
+      </AccessGuard>
+    ),
+  },
+  {
+    path: '/setup-wizard/welcome',
+    element: (
+      <AccessGuard level={AccessLevel.OnboardingCompleted}>
+        <SetupWelcome />
+      </AccessGuard>
+    ),
+  },
+
+  // ==================== Funding Routes ====================
+  // Requires: OnboardingCompleted + SetupCompleted
+  {
+    path: '/funding/intro',
+    element: (
+      <AccessGuard level={AccessLevel.SetupCompleted}>
+        <FundingIntroPage />
+      </AccessGuard>
+    ),
+  },
+  {
+    path: '/funding/payouts',
+    element: (
+      <AccessGuard level={AccessLevel.SetupCompleted}>
+        <FundingPayoutConnectPage />
+      </AccessGuard>
+    ),
+  },
+  {
+    path: '/funding/options',
+    element: (
+      <AccessGuard level={AccessLevel.SetupCompleted}>
+        <FundingOptionsPage />
+      </AccessGuard>
+    ),
+  },
+  {
+    path: '/funding/post',
+    element: (
+      <AccessGuard level={AccessLevel.SetupCompleted}>
+        <FundingPostPage />
+      </AccessGuard>
+    ),
   },
 ])

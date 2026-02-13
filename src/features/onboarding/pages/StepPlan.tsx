@@ -1,75 +1,8 @@
-import { Card, Chip } from '@/shared/ui'
 import { OnboardingLayout } from '../OnboardingLayout'
+import type { Feature } from '@/shared/components/PlanCard'
+import { PlanCard } from '@/shared/components/PlanCard'
 
-interface Feature {
-  title: string
-  description: string
-}
-
-interface PlanCardProps {
-  title: string
-  description: string
-  price: number
-  features: Feature[]
-  note: string
-  highlighted?: boolean
-  badge?: string
-}
-
-function PlanCard({
-  title,
-  description,
-  price,
-  features,
-  note,
-  highlighted = false,
-  badge,
-}: PlanCardProps): React.JSX.Element {
-  return (
-    <Card className={`rounded-[14px] p-3.5 ${highlighted ? 'border-2 border-[#1f6f4a]/25' : ''}`}>
-      {badge ? (
-        <div className="mb-2 flex items-center justify-between gap-2.5">
-          <h3 className="m-0 text-sm font-semibold">{title}</h3>
-          <Chip>{badge}</Chip>
-        </div>
-      ) : (
-        <h3 className="m-0 mb-2 text-sm font-semibold">{title}</h3>
-      )}
-
-      <div className="text-xs text-muted-foreground">{description}</div>
-
-      <div className="mt-2 text-[26px] font-black leading-none">
-        ${price} <span className="text-sm font-bold text-muted-foreground">/mo</span>
-      </div>
-
-      <div className="mt-3 flex flex-col gap-2.5">
-        {features.map((feature, index) => (
-          <div
-            key={index}
-            className="rounded-sm border border-border bg-card-secondary px-2.5 py-2.5"
-          >
-            <div className="text-[13px] font-semibold">{feature.title}</div>
-            <div className="mt-1 text-xs text-muted-foreground">{feature.description}</div>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-3 rounded-sm border border-[#1f6f4a]/[0.18] bg-[#1f6f4a]/[0.06] px-2.5 py-2.5 text-xs text-muted-foreground">
-        {note.split('**').map((part, index) =>
-          index % 2 === 1 ? (
-            <strong key={index} className="text-foreground">
-              {part}
-            </strong>
-          ) : (
-            part
-          )
-        )}
-      </div>
-    </Card>
-  )
-}
-
-export default function StepPlan(): React.JSX.Element {
+export function StepPlan(): React.JSX.Element {
   const starterFeatures: Feature[] = [
     {
       title: 'Hosted community',

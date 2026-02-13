@@ -1,18 +1,11 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
+import { createContext, useContext, useState, type ReactNode } from 'react'
 
 export interface SetupWizardData {
-  // Step 1: Branding
   bannerFile: File | null
   avatarFile: File | null
-
-  // Step 2: Purpose
   communityMission: string
   communityNorms: string
-
-  // Step 3: Welcome
   welcomePost: string
-
-  // Completion status
   isComplete: boolean
 }
 
@@ -24,8 +17,6 @@ interface SetupWizardContextValue {
 }
 
 const SetupWizardContext = createContext<SetupWizardContextValue | null>(null)
-
-const STORAGE_KEY = 'commonshub_setup_wizard_data'
 
 const initialData: SetupWizardData = {
   bannerFile: null,
@@ -51,39 +42,8 @@ Tip: Start with the Local timeline to see what's happening.`,
   isComplete: false,
 }
 
-// Helper to load from localStorage
-function loadFromStorage(): SetupWizardData {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY)
-    if (stored) {
-      const parsed = JSON.parse(stored) as SetupWizardData
-      // Files can't be serialized, so they'll always be null from storage
-      return { ...initialData, ...parsed, bannerFile: null, avatarFile: null }
-    }
-  } catch (error) {
-    console.error('Failed to load setup wizard data from storage:', error)
-  }
-  return initialData
-}
-
-// Helper to save to localStorage
-function saveToStorage(data: SetupWizardData): void {
-  try {
-    // Don't serialize File objects
-    const toStore = { ...data, bannerFile: null, avatarFile: null }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(toStore))
-  } catch (error) {
-    console.error('Failed to save setup wizard data to storage:', error)
-  }
-}
-
 export function SetupWizardProvider({ children }: { children: ReactNode }): React.JSX.Element {
-  const [data, setData] = useState<SetupWizardData>(loadFromStorage)
-
-  // Persist to localStorage whenever data changes
-  useEffect(() => {
-    saveToStorage(data)
-  }, [data])
+  const [data, setData] = useState<SetupWizardData>(initialData)
 
   const updateData = (updates: Partial<SetupWizardData>): void => {
     setData(prev => ({ ...prev, ...updates }))
@@ -95,11 +55,6 @@ export function SetupWizardProvider({ children }: { children: ReactNode }): Reac
 
   const reset = (): void => {
     setData(initialData)
-    try {
-      localStorage.removeItem(STORAGE_KEY)
-    } catch (error) {
-      console.error('Failed to remove setup wizard data from storage:', error)
-    }
   }
 
   return (

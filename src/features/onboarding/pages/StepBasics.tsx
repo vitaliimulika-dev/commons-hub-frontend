@@ -2,7 +2,7 @@ import { Card, Input, Label } from '@/shared/ui'
 import { OnboardingLayout } from '../OnboardingLayout'
 import { useOnboarding } from '../OnboardingContext'
 
-export default function StepBasics(): React.JSX.Element {
+export function StepBasics(): React.JSX.Element {
   const { data, updateData } = useOnboarding()
 
   return (

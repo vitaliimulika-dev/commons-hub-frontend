@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { StageLayout } from '@/shared/layouts'
-import { Button, LogoMark, Chip } from '@/shared/ui'
+import { Button, LogoMark, Badge } from '@/shared/ui'
 import { ProgressIndicator } from '@/shared/components'
 import { useOnboarding } from './OnboardingContext'
 
@@ -30,7 +30,7 @@ export function OnboardingLayout({
   children,
 }: OnboardingLayoutProps): React.JSX.Element {
   const navigate = useNavigate()
-  const { reset } = useOnboarding()
+  const { reset, completeOnboarding } = useOnboarding()
 
   const progressWidth: number = step === 1 ? 33 : step === 2 ? 66 : 100
 
@@ -44,6 +44,10 @@ export function OnboardingLayout({
   }
 
   const handleContinue = (): void => {
+    // Complete onboarding on final step before navigating to dashboard
+    if (step === 3) {
+      completeOnboarding()
+    }
     void navigate(continueTo)
   }
 
@@ -61,7 +65,14 @@ export function OnboardingLayout({
           </div>
         </>
       }
-      topbarCenter={<Chip>Step {step} of 3</Chip>}
+      topbarCenter={
+        <Badge
+          variant="secondary"
+          className="whitespace-nowrap border-border py-1.5 text-muted-foreground"
+        >
+          Step {step} of 3
+        </Badge>
+      }
       topbarRight={
         <Button
           variant="secondary"
@@ -78,7 +89,12 @@ export function OnboardingLayout({
           <h2 className="m-0 text-lg font-semibold">{heading}</h2>
           <p className="mt-2 text-xs text-muted-foreground">{description}</p>
         </div>
-        <Chip>{timeEstimate}</Chip>
+        <Badge
+          variant="secondary"
+          className="whitespace-nowrap border-border py-1.5 text-muted-foreground"
+        >
+          {timeEstimate}
+        </Badge>
       </div>
 
       {/* Progress */}

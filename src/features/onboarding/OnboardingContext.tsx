@@ -6,11 +6,13 @@ export interface OnboardingData {
   ownerEmail: string
   communityName: string
   communityAddress: string
+  isOnboardingComplete: boolean
 }
 
 interface OnboardingContextValue {
   data: OnboardingData
   updateData: (updates: Partial<OnboardingData>) => void
+  completeOnboarding: () => void
   reset: () => void
 }
 
@@ -22,6 +24,7 @@ const initialData: OnboardingData = {
   ownerEmail: '',
   communityName: '',
   communityAddress: '',
+  isOnboardingComplete: false,
 }
 
 export function OnboardingProvider({ children }: { children: ReactNode }): React.JSX.Element {
@@ -31,12 +34,16 @@ export function OnboardingProvider({ children }: { children: ReactNode }): React
     setData(prev => ({ ...prev, ...updates }))
   }
 
+  const completeOnboarding = (): void => {
+    setData(prev => ({ ...prev, isOnboardingComplete: true }))
+  }
+
   const reset = (): void => {
     setData(initialData)
   }
 
   return (
-    <OnboardingContext.Provider value={{ data, updateData, reset }}>
+    <OnboardingContext.Provider value={{ data, updateData, completeOnboarding, reset }}>
       {children}
     </OnboardingContext.Provider>
   )

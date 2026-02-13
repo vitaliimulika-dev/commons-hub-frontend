@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { StageLayout } from '@/shared/layouts'
-import { LogoMark, Chip, Button } from '@/shared/ui'
+import { LogoMark, Badge, Button } from '@/shared/ui'
 import { useOnboarding } from '@/features/onboarding/OnboardingContext'
 import { useSetupWizard } from '@/features/setup-wizard'
 
@@ -14,7 +14,6 @@ export function DashboardLayout({ children }: DashboardLayoutProps): React.JSX.E
   const { reset: resetOnboarding } = useOnboarding()
   const { reset: resetSetupWizard } = useSetupWizard()
 
-  // Add dashboard class to body on mount, remove on unmount
   useEffect(() => {
     document.body.classList.add('dashboard')
     return () => {
@@ -42,7 +41,14 @@ export function DashboardLayout({ children }: DashboardLayoutProps): React.JSX.E
           </div>
         </>
       }
-      topbarCenter={<Chip>Owner view</Chip>}
+      topbarCenter={
+        <Badge
+          variant="secondary"
+          className="whitespace-nowrap border-[var(--dashBorder)] bg-white/10 py-1.5 font-bold text-[var(--dashText)]"
+        >
+          Owner view
+        </Badge>
+      }
       topbarRight={
         <Button
           variant="secondary"

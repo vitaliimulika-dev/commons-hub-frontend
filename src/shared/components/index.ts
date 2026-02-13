@@ -1,3 +1,5 @@
+export { ErrorBoundary } from './ErrorBoundary'
 export { FlowBanner } from './FlowBanner'
 export { StepHeader } from './StepHeader'
 export { ProgressIndicator } from './ProgressIndicator'
+export { PlanCard } from './PlanCard'

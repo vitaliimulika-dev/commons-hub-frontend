@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { StageLayout } from '@/shared/layouts'
-import { Button, LogoMark, Chip } from '@/shared/ui'
+import { Button, LogoMark, Badge } from '@/shared/ui'
 import { FlowBanner, ProgressIndicator } from '@/shared/components'
 import { useSetupWizard } from './SetupWizardContext'
 
@@ -65,7 +65,14 @@ export function SetupWizardLayout({
           </div>
         </>
       }
-      topbarCenter={<Chip>Step {step} of 3</Chip>}
+      topbarCenter={
+        <Badge
+          variant="secondary"
+          className="whitespace-nowrap border-border py-1.5 text-muted-foreground"
+        >
+          Step {step} of 3
+        </Badge>
+      }
       topbarRight={
         <Button
           variant="secondary"
