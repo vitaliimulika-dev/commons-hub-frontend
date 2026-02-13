@@ -148,4 +148,92 @@
     background-size: 200% 100%;
     animation: flowPulse 3s ease-in-out infinite;
   }
+
+  /* Dashboard theme (dark mode) */
+  body.dashboard {
+    --bg: #46524d;
+    --dashText: #e9f2ec;
+    --dashMuted: rgba(233, 242, 236, 0.7);
+    --dashBorder: rgba(233, 242, 236, 0.14);
+    --card: rgba(255, 255, 255, 0.94);
+    --card2: rgba(255, 255, 255, 0.88);
+    --cardText: #0f1713;
+    --cardMuted: rgba(15, 23, 19, 0.7);
+    --line: rgba(15, 23, 19, 0.1);
+
+    background: radial-gradient(
+        1200px 600px at 30% 0%,
+        rgba(31, 111, 74, 0.05),
+        transparent 70%
+      ),
+      radial-gradient(
+        1000px 600px at 80% 10%,
+        rgba(31, 111, 74, 0.04),
+        transparent 70%
+      ),
+      var(--bg);
+    color: var(--dashText);
+  }
+
+  /* Hide default body background gradient in dashboard mode */
+  body.dashboard::before {
+    display: none;
+  }
+
+  body.dashboard .header {
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid var(--dashBorder);
+  }
+
+  body.dashboard .header h2 {
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+  }
+
+  body.dashboard main {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--dashBorder);
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(14px);
+  }
+
+  body.dashboard .topbar {
+    background: rgba(255, 255, 255, 0.12);
+    border-bottom: 1px solid var(--dashBorder);
+  }
+
+  body.dashboard .chip {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--dashBorder);
+    color: var(--dashText);
+    font-weight: 700;
+  }
+
+  body.dashboard .secondary {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--dashBorder);
+    color: var(--dashText);
+  }
+
+
+  body.dashboard .card {
+    background: var(--card);
+    color: var(--cardText);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  body.dashboard .card + .card {
+    margin-top: 18px;
+  }
+
+  body.dashboard .card .muted {
+    color: var(--cardMuted);
+  }
+
+  body.dashboard .topbar .muted,
+  body.dashboard .header .muted {
+    color: rgba(233, 242, 236, 0.82);
+  }
 }

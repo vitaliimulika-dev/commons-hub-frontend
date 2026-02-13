@@ -3,8 +3,8 @@ import LandingPage from '@/features/landing/LandingPage'
 import StepPlan from '@/features/onboarding/steps/StepPlan'
 import StepBasics from '@/features/onboarding/steps/StepBasics'
 import StepReview from '@/features/onboarding/steps/StepReview'
-import DashboardPage from '@/features/dashboard/DashboardPage'
-import SetupWizardPage from '@/features/dashboard/SetupWizardPage'
+import { Dashboard } from '@/features/dashboard/Dashboard'
+import { SetupBranding, SetupPurpose, SetupWelcome } from '@/features/setup-wizard'
 import FundingPage from '@/features/funding/FundingPage'
 import FundingStripePage from '@/features/funding/FundingStripePage'
 import FundingOptionsPage from '@/features/funding/FundingOptionsPage'
@@ -39,11 +39,20 @@ export const router = createBrowserRouter([
   // Dashboard
   {
     path: '/dashboard',
-    element: <DashboardPage />,
+    element: <Dashboard />,
+  },
+  // Setup Wizard
+  {
+    path: '/setup-wizard/branding',
+    element: <SetupBranding />,
   },
   {
-    path: '/dashboard/wizard',
-    element: <SetupWizardPage />,
+    path: '/setup-wizard/purpose',
+    element: <SetupPurpose />,
+  },
+  {
+    path: '/setup-wizard/welcome',
+    element: <SetupWelcome />,
   },
   {
     path: '/dashboard/funding',

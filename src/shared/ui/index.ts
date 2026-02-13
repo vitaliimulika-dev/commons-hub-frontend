@@ -5,6 +5,7 @@ export { Card } from './card'
 export { Input } from './input'
 export { Label } from './label'
 export { Badge } from './badge'
+export { Textarea } from './textarea'
 
 // Custom components
 export { LogoMark } from './logo-mark'
